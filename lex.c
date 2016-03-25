@@ -621,7 +621,16 @@ nmgetch()
 {
     register int c;
 
+#ifdef __CYGWIN__
+    /*
+     * Workaround for Cygwin getch() not blocking. Note, I tried using
+     * function nodelay(stdscr, FALSE), but this had no effect.
+     */
+    while ((c = getch()) == -1) { usleep(50); /* 50mS sleep */ }
+#else
     c = getch();
+#endif /* __CYGWIN__ */
+
     switch (c) {
 #ifdef KEY_SELECT
 	case KEY_SELECT:	c = 'm';	break;
