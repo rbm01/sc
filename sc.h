@@ -14,6 +14,11 @@
 #include <stdio.h>
 #endif
 
+#ifdef __CYGWIN__
+#include <unistd.h>     /* RBM 22/Mar/2016 */
+#include <curses.h>     /* RBM 22/Mar/2016 */
+#endif /* __CYGWIN__ */
+
 #define	ATBL(tbl, row, col)	(*(tbl + row) + (col))
 
 #define MINROWS 100 	/* minimum size at startup */
@@ -574,3 +579,18 @@ extern	int collimit;
 #else
 #include <memory.h>
 #endif
+
+#ifdef __CYGWIN__
+/*
+ * Function declarations
+ */
+void yankcol(int arg);
+void yankrow(int arg);
+void deleterow(register int arg);
+void gotonote(void);
+void list_frames(FILE *f);
+void yankr(struct ent *v1, struct ent *v2);
+void getframe(int fd);
+void doeval(struct enode *e, char *fmt, int row, int col, int fd);
+void doseval(struct enode *e, int row, int col, int fd);
+#endif /* __CYGWIN__ */

@@ -14,6 +14,10 @@ char	*revision = "$Revision: 7.13 $";
 #include "sc.h"
 #endif /* QREF */
 
+#if defined __CYGWIN__ || defined __linux__
+#include <stdlib.h>
+#endif /* defined __CYGWIN__ || defined__linux__ */
+
 char *intro[] = {
 " ",
 #if defined(QREF) && defined(TROFF)
