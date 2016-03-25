@@ -84,6 +84,10 @@ size_t	strlen();
 # define	TRUE	1
 #endif /* !FALSE */
 
+#ifndef bool
+#define bool	int
+#endif /* bool */
+
 /*
  * ent_ptr holds the row/col # and address type of a cell
  *
@@ -360,12 +364,12 @@ extern	int are_frames();
 extern	int are_ranges();
 extern	int atocol(char *string, int len);
 extern	int cwritefile(char *fname, int r0, int c0, int rn, int cn);
-extern	int engformat(int fmt, int width, int lprecision, double val,
+extern	bool engformat(int fmt, int width, int lprecision, double val,
 	char *buf, int buflen);
 extern	int etype(register struct enode *e);
 extern	int find_range(char *name, int len, struct ent *lmatch,
 	struct ent *rmatch, struct range **rng);
-extern	int format(char *fmt, int lprecision, double val, char *buf,
+extern	bool format(char *fmt, int lprecision, double val, char *buf,
 	int buflen);
 extern	int get_rcqual(int ch);
 extern	int growtbl(int rowcol, int toprow, int topcol);

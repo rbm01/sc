@@ -95,7 +95,6 @@
 #include <time.h>
 #include "sc.h"
 
-#define bool	int
 #define true	1
 #define false	0
 #define EOS	'\0'
