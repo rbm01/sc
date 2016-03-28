@@ -6,7 +6,7 @@
 #include <curses.h>
 #include "sc.h"
 
-#if defined __CYGWIN__ || defined __linux__
+#if defined __CYGWIN__ || defined __linux__ || defined __OpenBSD__
 extern void	*malloc(size_t size);
 extern void	*realloc(void *ptr, size_t size);
 extern void	free(void *ptr);
@@ -16,7 +16,7 @@ extern char	*malloc();
 extern char	*realloc();
 extern void	free();
 void		fatal();
-#endif /* defined __CYGWIN__ || defined__linux__ */
+#endif /* defined __CYGWIN__ || defined__linux__ || defined __OpenBSD__ */
 
 #ifdef SYSV3
 extern void	free();

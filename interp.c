@@ -482,7 +482,9 @@ dotts(int hr, int min, int sec)
 double
 dotime(int which, double when)
 {
+#ifndef __OpenBSD__
 	long time();
+#endif /* __OpenBSD__ */
 
 	static long t_cache;
 	static struct tm tm_cache;
@@ -490,12 +492,20 @@ dotime(int which, double when)
 	long tloc;
 
 	if (which == NOW) 
+#ifdef __OpenBSD__
+	    return (double)time((time_t *)0);
+#else
 	    return (double)time((long *)0);
+#endif /* __OpenBSD__ */
 
 	tloc = (long)when;
 
 	if (tloc != t_cache) {
+#ifdef __OpenBSD__
+	    tp = localtime((const time_t *)(&tloc));
+#else
 	    tp = localtime(&tloc);
+#endif /* __OpenBSD__ */
 	    tm_cache = *tp;
 	    tm_cache.tm_mon += 1;
 	    tm_cache.tm_year += 1900;
@@ -946,7 +956,11 @@ dodate(long tloc)
     char *tp;
     char *p;
 
+#ifdef __OpenBSD__
+    tp = ctime((const time_t *)(&tloc));
+#else
     tp = ctime(&tloc);
+#endif /* __OpenBSD__ */
     tp[24] = '\0';
     p = scxmalloc((unsigned)25);
     (void) strcpy(p, tp);
