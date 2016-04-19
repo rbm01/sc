@@ -599,21 +599,33 @@ void
 initkbd()
 {
     keypad(stdscr, TRUE);
-    notimeout(stdscr,TRUE);
+#ifdef __CYGWIN__
+    wtimeout(stdscr, -1);       /* Use blocking read for getch() */
+#else
+    notimeout(stdscr,TRUE);    
+#endif /* __CYGWIN__ */
 }
 
 void
 kbd_again()
 {
     keypad(stdscr, TRUE);
-    notimeout(stdscr,TRUE);
+#ifdef __CYGWIN__
+    wtimeout(stdscr, -1);       /* Use blocking read for getch() */
+#else
+    notimeout(stdscr,TRUE);    
+#endif /* __CYGWIN__ */
 }
 
 void
 resetkbd()
 {
     keypad(stdscr, FALSE);
+#ifdef __CYGWIN__
+    wtimeout(stdscr, 0);       /* Use non-blocking read for getch() */
+#else
     notimeout(stdscr, FALSE);
+#endif /* __CYGWIN__ */
 }
 
 int
@@ -621,15 +633,7 @@ nmgetch()
 {
     register int c;
 
-#ifdef __CYGWIN__
-    /*
-     * Workaround for Cygwin getch() not blocking. Note, I tried using
-     * function nodelay(stdscr, FALSE), but this had no effect.
-     */
-    while ((c = getch()) == -1) { usleep(50); /* 50mS sleep */ }
-#else
     c = getch();
-#endif /* __CYGWIN__ */
 
     switch (c) {
 #ifdef KEY_SELECT
