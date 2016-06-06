@@ -648,21 +648,33 @@ void
 initkbd()
 {
     keypad(stdscr, TRUE);
-    notimeout(stdscr,TRUE);
+#ifdef __CYGWIN__
+    wtimeout(stdscr, -1);       /* Use blocking read for getch() */
+#else
+    notimeout(stdscr,TRUE);    
+#endif /* __CYGWIN__ */
 }
 
 void
 kbd_again()
 {
     keypad(stdscr, TRUE);
-    notimeout(stdscr,TRUE);
+#ifdef __CYGWIN__
+    wtimeout(stdscr, -1);       /* Use blocking read for getch() */
+#else
+    notimeout(stdscr,TRUE);    
+#endif /* __CYGWIN__ */
 }
 
 void
 resetkbd()
 {
     keypad(stdscr, FALSE);
-    notimeout(stdscr, FALSE);
+#ifdef __CYGWIN__
+    wtimeout(stdscr, -1);       /* Use blocking read for getch() */
+#else
+    notimeout(stdscr,TRUE);    
+#endif /* __CYGWIN__ */
 }
 
 int
