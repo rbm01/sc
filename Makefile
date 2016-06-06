@@ -336,7 +336,11 @@ CC=gcc
 # real effect on the reliability of the program, but may concern some
 # people who don't understand them.
 #CFLAGS=-DSYSV3 -O2 -Wall -pipe
-CFLAGS=-DSYSV3 -O2 -pipe
+#CFLAGS=-DSYSV3 -O2 -pipe
+# There is, what suggests, a gcc strict aliasing issue, which shows itself on
+# Centos and OpenBSD when using -O2 optimisation, so use -O to disable
+# that "feature". [RBM 20160607]
+CFLAGS=-DSYSV3 -O -pipe
 LIB=-lm -lncurses
 
 # All of the source files
