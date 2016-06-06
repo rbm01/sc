@@ -968,7 +968,7 @@ command:	S_LET var_or_range '=' e
 						macrofd); }
 	|	S_EVAL e STRING '|' NUMBER
 					{ doeval($2, $3, currow, curcol,
-						$3); }
+						$5); } /* Was '$3'. RBM 22/Mar/2016 */
 	|	S_SEVAL e		{ doseval($2, currow, curcol, macrofd); }
 	|	S_QUERY STRING STRING	{ doquery($2, $3, macrofd); }
 	|	S_QUERY STRING STRING '|' NUMBER
